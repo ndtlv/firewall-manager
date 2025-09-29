@@ -26,7 +26,7 @@ class FilteringPolicyAPI(MethodResource):
     @doc(
         description='Delete an existing filtering policy.',
         tags=['Filtering Policies'],
-        responses={'204': 'No Content'}
+        responses={'204': {'description':'No Content'}}
     )
     @use_kwargs(PolicyIdSchema, location='query')
     def delete(self, policy_id: str):

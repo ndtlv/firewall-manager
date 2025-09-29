@@ -32,8 +32,8 @@ docker run -p 5000:5000 firewall-manager
 1. Create and activate a dedicated python environment:
 
 ```bash
-python3 -m venv ~/.venv/firewall-manager
-source ~/.venv/firewall-manager/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 ```
 
 2. Install the dependencies:

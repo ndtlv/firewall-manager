@@ -21,7 +21,11 @@ class FirewallAPI(MethodResource):
         firewall = db_manager.create_row(Firewall, request_body)
         return firewall, 201
 
-    @doc(description='Delete an existing firewall.', tags=['Firewalls'], responses={'204': 'No Content'})
+    @doc(
+        description='Delete an existing firewall.',
+        tags=['Firewalls'],
+        responses={'204': {'description':'No Content'}}
+    )
     @use_kwargs(FWIdSchema, location='query')
     def delete(self, firewall_id: str):
         db_manager.delete_row(Firewall, firewall_id)

@@ -35,7 +35,7 @@ class DBManager:
 
     @db_connection
     def init(self):
-        self._db.create_tables(MODELS)
+        self._db.create_tables([Firewall, FirewallRule, FilteringPolicy])
         logging.debug('Database init successful')
 
     @db_connection
