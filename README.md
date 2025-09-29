@@ -9,7 +9,7 @@ that allows to perform CRUD operations on:
 
 Schema and relationship between elements mentioned is described on the following diagram:
 
-![Architecture Diagram](public/diagram.png)
+![Architecture Diagram](public/diagram.jpg)
 
 ## Installation
 
@@ -52,7 +52,7 @@ flask run
 
 After starting the API Server, Swagger homepage can be found on http://localhost:5000/docs endpoint.
 
-![Swagger](public/swagger.png)
+![Swagger](public/swagger.jpg)
 
 _Please note that default body values provided in Swagger are an example of valid request formatting
 and can be used to populate the database._
