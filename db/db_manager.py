@@ -2,16 +2,16 @@ import logging
 from functools import wraps
 from typing import Union, Optional
 
-from .models import db, Firewall, FirewallRule, FilteringPolicy
+from .models import db, Firewall, FirewallRule, FilteringPolicy, SqliteDatabase
 
-MODELS = [Firewall, FirewallRule, FilteringPolicy]
+Models = Union[Firewall, FirewallRule, FilteringPolicy]
 
 
 class DBManager:
     """
     A service called to manage all interactions with the chosen Sqlite database
     """
-    def __init__(self, database):
+    def __init__(self, database: SqliteDatabase):
         self._db = database
 
     def open(self):
@@ -39,7 +39,7 @@ class DBManager:
         logging.debug('Database init successful')
 
     @db_connection
-    def create_row(self, model: Union[*MODELS], config: dict):
+    def create_row(self, model: Models, config: dict):
         try:
             row = model.create(**config)
             row.save()
@@ -50,7 +50,7 @@ class DBManager:
             return row
 
     @db_connection
-    def get_row(self, model: Union[*MODELS], row_id: str, return_field: Optional[str] = None):
+    def get_row(self, model: Models, row_id: str, return_field: Optional[str] = None):
         try:
             row = model.select().where(model.id == row_id).get()
         except Exception as error:
@@ -60,7 +60,7 @@ class DBManager:
             return getattr(row, return_field) if return_field else row
 
     @db_connection
-    def get_rows(self, model: Union[*MODELS], row_id: Optional[str] = None):
+    def get_rows(self, model: Models, row_id: Optional[str] = None):
         if row_id:
             return [self.get_row(model, row_id)]
 
@@ -73,7 +73,7 @@ class DBManager:
             return rows
 
     @db_connection
-    def delete_row(self, model: Union[*MODELS], row_id: str):
+    def delete_row(self, model: Models, row_id: str):
         try:
             query = model.delete().where(model.id == row_id)
             query.execute()
@@ -82,7 +82,7 @@ class DBManager:
             raise
 
     @db_connection
-    def update_row(self, model: Union[*MODELS], row_id: str, config: dict):
+    def update_row(self, model: Models, row_id: str, config: dict):
         try:
             query = model.update(**config).where(model.id == row_id)
             query.execute()

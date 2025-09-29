@@ -9,6 +9,9 @@ from db import db_manager
 from error_handlers import error_handlers
 from views import FirewallRuleAPI, FirewallAPI, FilteringPolicyAPI, FilteringPolicyFirewallAPI, FilteringPolicyFWRuleAPI
 
+
+######### Logger config
+
 logging.basicConfig(
     level=logging.DEBUG,
     format="[%(asctime)s] %(levelname)s - %(name)s: %(message)s",
@@ -32,7 +35,6 @@ app.add_url_rule(
 app.add_url_rule(
     '/filtering_policies/<string:policy_id>/firewall_rule',
     view_func=FilteringPolicyFWRuleAPI.as_view('filtering_policies_fw_rule'), methods=['GET'])
-
 
 ######### Swagger configuration
 
@@ -64,6 +66,7 @@ with app.app_context():
 def teardown(exception):
     db_manager.close()
 
+######### App start
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000)
